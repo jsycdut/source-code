@@ -1,13 +1,17 @@
-# openjdk8
-看了周志明的《深入理解Java虚拟机》，想着编译一把jdk，书上写的jdk7，编译的时候要配置的问题比较多，但是jdk8的编译较为简单，但是依然在过程中遇到了很多问题。
+# build openjdk8 from source
 
-从源代码编译jdk8, 未修改过的源代码文件为`openjdk-8-src-b132-03_mar_2014.zip`，个人在编译过程中遇到了诸多无奈的问题，比如`-Werror`导致的warning as error问题，gcc版本(7.4)的问题，cpp函数声明位置，系统内核版本问题等，这其中很大一部分都需要修改源代码里面的配置文件，所以我将这些需要修改的东西都修改好了，并且也能正确编译出可运行的jdk。
+周志明先生的《深入理解java虚拟机》第2版里面示例编译的是openjdk7，第3版里面编译的是openjdk12，个人偏好编译jdk8，详细内容可以参考[simple README](./openjdk/README)或者[Open JDK8 Build README](http://hg.openjdk.java.net/jdk8/jdk8/raw-file/tip/README-builds.html)以及书中相关章节。由于在编译时遇到了一些[问题](https://www.cnblogs.com/sunilsun/p/6078171.html)，我改动了里面的一点cpp源码，然后才有了现在的这个仓库（或者直接sed一把改源码是个更好的做法，避免了大量的代码上传）。
 
-## 个人环境
+## build on docker image
 
-这里比较需要注意的是gcc的版本，较新的版本比如7.4可能会报错
+因为某些原因，我制作了一个开箱即可编译openjdk8的docker镜像，基于ubuntu 20.04 LTS，涵盖了所有需要的编译工具链，详细参见[jsycdut/openjdk8-build-env](https://hub.docker.com/r/jsycdut/openjdk8-build-env)，建议使用docker镜像启动容器进行编译，避免了自己配置环境的麻烦。
+
+## build on your real machine
+
+参考上方提到的参考资料是最好的方式，主要解决的就是依赖，尤其是gcc版本的问题，以下为个人编译过程的简要记录
 
 ```bash
+# 以下为环境记录
 ➜  ~ uname -a
 Linux dreamer 4.15.0-88-generic #88-Ubuntu SMP 
 Tue Feb 11 20:11:34 UTC 2020 x86_64 x86_64 x86_64 GNU/Linux
@@ -37,15 +41,7 @@ java version "1.7.0_80"
 Java(TM) SE Runtime Environment (build 1.7.0_80-b15)
 Java HotSpot(TM) 64-Bit Server VM (build 24.80-b11, mixed mode)
 
-```
-
-## 提前预备资料
-- [README](./openjdk/README)
-- [README-builds.html](./openjdk/README-builds.html)
-- [参考资料](https://www.cnblogs.com/sunilsun/p/6078171.html)
-
-## 编译流程
-```bash
+# 以下为编译简要记录
 $ cd openjdk
 $ bash ./configure # 检查编译环境
 $ make all #进行编译，遇到的问题和花费的时间依据个人而异
@@ -71,3 +67,9 @@ openjdk version "1.8.0-internal"
 OpenJDK Runtime Environment (build 1.8.0-internal-jsy_2020_03_04_15_33-b00)
 OpenJDK 64-Bit Server VM (build 25.0-b70, mixed mode)
 ```
+## debug
+
+debug openjdk8 的hotspot可以参考下面的文章，注意openjdk 7和8的调试方法已经不同了，搜索相关资料需要注意版本。
+
+- [Build OpenJDK9 on Mac OSX EI Captain](https://github.com/chaoyangnz/openjdk9/wiki/Build-OpenJDK9-on-Mac-OSX-EI-Captain)
+- [调试HotSpot源代码](https://www.cnblogs.com/mazhimazhi/p/13217159.html)
