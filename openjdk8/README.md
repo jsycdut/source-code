@@ -1,6 +1,6 @@
 # build openjdk8 from source
 
-周志明先生的《深入理解java虚拟机》第2版里面示例编译的是openjdk7，第3版里面编译的是openjdk12，个人偏好编译jdk8，详细内容可以参考[simple README](./openjdk/README)或者[Open JDK8 Build README](http://hg.openjdk.java.net/jdk8/jdk8/raw-file/tip/README-builds.html)以及书中相关章节。由于在编译时遇到了一些[问题](https://www.cnblogs.com/sunilsun/p/6078171.html)，我改动了里面的一点cpp源码，然后才有了现在的这个仓库（或者直接sed一把改源码是个更好的做法，避免了大量的代码上传）。
+周志明先生的《深入理解java虚拟机》第2版里面示例编译的是openjdk7，第3版里面编译的是openjdk12，个人偏好编译jdk8，详细内容可以参考[simple README](./openjdk/README)或者[Open JDK8 Build README](http://hg.openjdk.java.net/jdk8/jdk8/raw-file/tip/README-builds.html)以及书中相关章节。由于在编译时遇到了一些[问题](https://www.cnblogs.com/sunilsun/p/6078171.html)，我改动了里面的一点cpp源码，然后才有了现在的这个仓库（或者直接sed一把改源码是个更好的做法，避免了大量的代码上传）。编译最好是根据[官方的指导](http://openjdk.java.net/groups/build/doc/building.html)进行，并且最好是提前读完整个文档之后，对编译有一个大致的了解之后再进行，否则容易碰到各种各种的问题之后就失去信心。
 
 ## build on docker image
 
